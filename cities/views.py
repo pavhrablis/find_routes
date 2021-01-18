@@ -9,7 +9,6 @@ __all__ = (
 
 def home(request, pk=None):
     if pk:
-        # city = City.objects.filter(id=pk).first()
         city = get_object_or_404(City, id=pk)
         context = {'object': city}
         return render(request, 'cities/detail.html', context)
