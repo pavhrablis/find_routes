@@ -1,0 +1,9 @@
+<div class="row">
+    <div class="col-md">
+        <form action="{{ action }}" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+        <button type="submit" class="btn btn-promary">{{ button }}</button>
+        </form>
+    </div>
+</div>
