@@ -1,29 +1,33 @@
+from django.core.paginator import Paginator
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
-from django.views.generic import DetailView, CreateView, UpdateView, DeleteView
+from django.views.generic import DetailView, CreateView, UpdateView, DeleteView, ListView
 
 from cities.forms import CityForm
 from cities.models import City
 
 __all__ = (
-    'home',
+    #'home',
     'CityDetailView',
     'CityCreateView',
     'CityUpdateView',
     'CityDeleteView',
+    'CityListView',
 )
 
 
-def home(request, pk=None):
-    if request.method == "POST":
-        form = CityForm(request.POST)
-        if form.is_valid():
-            print(form.cleaned_data)
-            form.save()
-    form = CityForm()
-    cities = City.objects.all()
-    context = {'objects_list': cities, 'form': form}
-    return render(request, 'cities/home.html', context)
+# def home(request, pk=None):
+#     if request.method == "POST":
+#         form = CityForm(request.POST)
+#         if form.is_valid():
+#             form.save()
+#     form = CityForm()
+#     cities = City.objects.all()
+#     paginator = Paginator(cities, 2)
+#     page_number = request.GET.get('page')
+#     page_obj = paginator.get_page(page_number)
+#     context = {'page_obj': page_obj, 'form': form}
+#     return render(request, 'cities/home.html', context)
 
 
 class CityDetailView(DetailView):
@@ -46,8 +50,23 @@ class CityUpdateView(UpdateView):
 
 class CityDeleteView(DeleteView):
     model = City
-    #template_name = 'cities/delete.html'
     success_url = reverse_lazy('cities:home')
 
     def get(self, request, *args, **kwargs):
         return self.post(request, *args, **kwargs)
+
+
+class CityListView(ListView):
+    model = City
+    paginate_by = 2
+    template_name = 'cities/home.html'
+    form = CityForm
+
+    def get_context_data(self, **kwargs):
+       context = super().get_context_data(**kwargs)
+       form = CityForm()
+       context['form'] = form
+       return context
+
+
+
