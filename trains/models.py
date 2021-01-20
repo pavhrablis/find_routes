@@ -39,4 +39,4 @@ class Train(models.Model):
 
     def save(self, *args, **kwargs):
         self.clean()
-        super.sava(*args, **kwargs)
+        super().save(*args, **kwargs)

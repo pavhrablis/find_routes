@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
-{% block title %} Lista miast {% endblock %}
+{% block title %} City list {% endblock %}
 
 {% block content %}
-<h1>Miasto</h1>
+<h1>City</h1>
 <div class="row">
     <div class="col-md">
         <p>{{object.name}}</p>
@@ -11,7 +11,7 @@
 <div class="row">
     <div class="col-md-4">
         <a href="{% url 'cities:home' %}">
-            <button type="button" class="btn btn-light">Powrót do listy</button>
+            <button type="button" class="btn btn-primary">Back</button>
         </a>
     </div>
 </div>
