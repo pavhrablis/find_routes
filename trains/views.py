@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy
 from django.views.generic import DetailView, CreateView, UpdateView, DeleteView, ListView
@@ -41,7 +42,7 @@ class TrainCreateView(SuccessMessageMixin, CreateView):
     success_message = "Train successfully created"
 
 
-class TrainUpdateView(SuccessMessageMixin, UpdateView):
+class TrainUpdateView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     model = Train
     form_class = TrainForm
     template_name = 'trains/update.html'
@@ -49,7 +50,7 @@ class TrainUpdateView(SuccessMessageMixin, UpdateView):
     success_message = "Train successfully changed"
 
 
-class TrainDeleteView(SuccessMessageMixin, DeleteView):
+class TrainDeleteView(SuccessMessageMixin, LoginRequiredMixin, DeleteView):
     model = Train
     success_url = reverse_lazy('trains:home')
 
